@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loem Project - Portfolio Hub</title>
+    <meta name="description" content="Tổng hợp các dự án công nghệ, website và công cụ thực hiện bởi Loem Agency. Founder: Nguyễn Trọng Liêm.">
+    
+    <!-- Favicon placeholder -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS (via CDN for single file requirement) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#6366f1', // Indigo 500
+                        secondary: '#ec4899', // Pink 500
+                        dark: '#0f172a', // Slate 900
+                        card: '#1e293b', // Slate 800
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles for Glossy/Modern effect */
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        .glass-nav {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .project-card {
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 102, 241, 0.5);
+            box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-gradient {
+            background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+            transition: opacity 0.3s ease;
+        }
+        .btn-gradient:hover {
+            opacity: 0.9;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .filter-btn.active {
+            background-color: white;
+            color: #0f172a;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-pink-500 selection:text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-pink-500">
+                        LOEM PROJECT
+                    </span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#projects" class="hover:text-indigo-400 px-3 py-2 rounded-md text-sm font-medium transition-colors" data-i18n="projects">Dự án</a>
+                        <a href="#about" class="hover:text-indigo-400 px-3 py-2 rounded-md text-sm font-medium transition-colors" data-i18n="about">Về chúng tôi</a>
+                        <a href="#contact" class="hover:text-indigo-400 px-3 py-2 rounded-md text-sm font-medium transition-colors" data-i18n="contact">Liên hệ</a>
+                    </div>
+                </div>
+
+                <!-- Right Side -->
+                <div class="flex items-center gap-4">
+                    <!-- Language Toggle -->
+                    <button id="lang-toggle" class="flex items-center gap-2 px-3 py-1.5 rounded-full border border-gray-600 hover:border-white transition-colors text-xs font-semibold uppercase tracking-wider">
+                        <span id="current-lang">VN</span>
+                        <i class="fa-solid fa-globe"></i>
+                    </button>
+                    
+                    <!-- CTA Button -->
+                    <a href="tel:0888802683" class="hidden md:inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-full shadow-sm text-white btn-gradient focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <i class="fa-solid fa-phone mr-2"></i> 0888 802 683
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="relative pt-32 pb-20 sm:pt-40 sm:pb-24 overflow-hidden">
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+            <h1 class="text-4xl sm:text-6xl font-bold tracking-tight mb-6 animate-fade-in" style="animation-delay: 0.1s;">
+                <span data-i18n="hero_title_1">Sáng tạo không giới hạn cùng</span> <br/>
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">Loem Agency</span>
+            </h1>
+            <p class="mt-4 text-xl text-gray-300 max-w-2xl mx-auto mb-10 animate-fade-in" style="animation-delay: 0.3s;" data-i18n="hero_desc">
+                Nơi tổng hợp các giải pháp công nghệ, website doanh nghiệp và các dự án sáng tạo được thực hiện bởi đội ngũ Loem.
+            </p>
+            <div class="flex justify-center gap-4 animate-fade-in" style="animation-delay: 0.5s;">
+                <a href="#projects" class="px-8 py-3 rounded-full bg-white text-dark font-bold hover:bg-gray-100 transition-colors shadow-lg shadow-indigo-500/20" data-i18n="view_projects">
+                    Xem dự án
+                </a>
+                <a href="https://zalo.me/0888802683" target="_blank" class="px-8 py-3 rounded-full border border-gray-500 hover:border-white hover:bg-white/5 transition-all text-white font-medium">
+                    Zalo Chat
+                </a>
+            </div>
+        </div>
+
+        <!-- Decorative elements -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-indigo-600/20 rounded-full blur-[120px] -z-10 pointer-events-none"></div>
+    </div>
+
+    <!-- Projects Section -->
+    <div id="projects" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        
+        <!-- Filter Tabs -->
+        <div class="flex flex-wrap justify-center gap-2 mb-12">
+            <button onclick="filterProjects('all')" class="filter-btn active px-5 py-2 rounded-full text-sm font-medium border border-gray-600 transition-all hover:border-white" data-i18n="filter_all">Tất cả</button>
+            <button onclick="filterProjects('business')" class="filter-btn px-5 py-2 rounded-full text-sm font-medium border border-gray-600 transition-all hover:border-white" data-i18n="filter_business">Doanh nghiệp</button>
+            <button onclick="filterProjects('tools')" class="filter-btn px-5 py-2 rounded-full text-sm font-medium border border-gray-600 transition-all hover:border-white" data-i18n="filter_tools">Công cụ & Tiện ích</button>
+            <button onclick="filterProjects('game')" class="filter-btn px-5 py-2 rounded-full text-sm font-medium border border-gray-600 transition-all hover:border-white" data-i18n="filter_game">Giải trí</button>
+        </div>
+
+        <!-- Grid -->
+        <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Project items will be injected here by JS -->
+        </div>
+    </div>
+
+    <!-- About / Founder Section -->
+    <section id="about" class="bg-card/50 border-y border-white/5 py-20 mt-10">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <div class="w-24 h-24 bg-gradient-to-tr from-indigo-500 to-pink-500 rounded-full mx-auto mb-6 flex items-center justify-center text-3xl text-white shadow-lg">
+                <i class="fa-solid fa-user-tie"></i>
+            </div>
+            <h2 class="text-3xl font-bold mb-4" data-i18n="founder_title">Người sáng lập</h2>
+            <h3 class="text-2xl text-indigo-400 font-semibold mb-6">Nguyễn Trọng Liêm</h3>
+            <p class="text-gray-300 leading-relaxed mb-8" data-i18n="founder_desc">
+                Loem Agency cam kết mang đến những giải pháp số hóa tối ưu nhất cho doanh nghiệp của bạn. Từ thiết kế website, lập trình phần mềm cho đến các công cụ marketing hiệu quả.
+            </p>
+            <div class="flex justify-center space-x-6">
+                <a href="#" class="text-gray-400 hover:text-white text-2xl transition-colors"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white text-2xl transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white text-2xl transition-colors"><i class="fa-brands fa-linkedin"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-gray-800 pt-8">
+            <!-- Col 1 -->
+            <div>
+                <h3 class="text-lg font-bold text-white mb-4">LOEM AGENCY</h3>
+                <p class="text-gray-400 text-sm mb-4" data-i18n="footer_desc">Đối tác tin cậy cho sự phát triển kỹ thuật số của bạn.</p>
+            </div>
+            <!-- Col 2 -->
+            <div>
+                <h3 class="text-lg font-bold text-white mb-4" data-i18n="contact_info">Thông tin liên hệ</h3>
+                <ul class="space-y-2 text-gray-400 text-sm">
+                    <li><i class="fa-solid fa-phone w-6 text-indigo-400"></i> 0888 802 683</li>
+                    <li><i class="fa-solid fa-user w-6 text-indigo-400"></i> Mr. Nguyễn Trọng Liêm</li>
+                    <li><i class="fa-solid fa-envelope w-6 text-indigo-400"></i> contact@loemagency.space</li>
+                </ul>
+            </div>
+            <!-- Col 3 -->
+            <div class="md:text-right">
+                <p class="text-gray-500 text-sm">&copy; 2024 Loem Agency.</p>
+                <p class="text-gray-600 text-xs mt-1" data-i18n="rights">All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // === DATA SOURCE ===
+        const projects = [
+            // Business / Enterprise
+            {
+                title: "ViralStudio",
+                descVN: "Website cho doanh nghiệp Creative & Studio.",
+                descEN: "Website for Creative Enterprise & Studio.",
+                url: "https://viralstudio-peach.vercel.app/",
+                category: "business",
+                icon: "fa-solid fa-pen-nib",
+                color: "from-purple-500 to-indigo-500"
+            },
+            {
+                title: "Loem Agency",
+                descVN: "Website chính thức dành cho doanh nghiệp Agency.",
+                descEN: "Official website for Agency business.",
+                url: "https://loemagency.space/",
+                category: "business",
+                icon: "fa-solid fa-rocket",
+                color: "from-blue-500 to-cyan-500"
+            },
+            {
+                title: "CNMed Group",
+                descVN: "Website thương mại điện tử chuyên nghiệp.",
+                descEN: "Professional E-commerce website.",
+                url: "https://cnmedgroup.vercel.app/",
+                category: "business",
+                icon: "fa-solid fa-building",
+                color: "from-emerald-500 to-teal-500"
+            },
+            {
+                title: "CNMed Admin",
+                descVN: "Hệ thống quản trị (Dashboard) cho doanh nghiệp Ecom.",
+                descEN: "Administration Dashboard for Ecom business.",
+                url: "https://cnmed.vercel.app/",
+                category: "business",
+                icon: "fa-solid fa-chart-line",
+                color: "from-gray-600 to-gray-500"
+            },
+            {
+                title: "Titan Club",
+                descVN: "Hệ thống quản trị & Booking cho Bar Club.",
+                descEN: "Management & Booking system for Bar Club.",
+                url: "https://titanclub.vercel.app/",
+                category: "business",
+                icon: "fa-solid fa-martini-glass-citrus",
+                color: "from-yellow-500 to-orange-500"
+            },
+            {
+                title: "Viral Sport",
+                descVN: "Nền tảng booking sân bãi thể thao.",
+                descEN: "Sports field booking platform.",
+                url: "https://viralsport.vercel.app/",
+                category: "business",
+                icon: "fa-solid fa-futbol",
+                color: "from-green-500 to-lime-500"
+            },
+            {
+                title: "Loem BĐS",
+                descVN: "Website giới thiệu dự án bất động sản cao cấp.",
+                descEN: "Premium Real Estate project showcase.",
+                url: "https://loembds.vercel.app/",
+                category: "business",
+                icon: "fa-solid fa-city",
+                color: "from-slate-500 to-zinc-500"
+            },
+            {
+                title: "Loem Spa",
+                descVN: "Website giới thiệu dịch vụ Spa & Làm đẹp.",
+                descEN: "Spa & Beauty service introduction website.",
+                url: "https://loemspa.vercel.app/",
+                category: "business",
+                icon: "fa-solid fa-spa",
+                color: "from-rose-400 to-pink-400"
+            },
+
+            // Tools
+            {
+                title: "2FA Authenticator",
+                descVN: "Công cụ lấy mã xác thực 2 yếu tố (2FA) nhanh chóng.",
+                descEN: "Fast Two-Factor Authentication (2FA) tool.",
+                url: "https://2fa-ivory.vercel.app/",
+                category: "tools",
+                icon: "fa-solid fa-shield-halved",
+                color: "from-blue-600 to-indigo-600"
+            },
+            {
+                title: "Text Generator",
+                descVN: "Công cụ tạo kiểu chữ đẹp & ký tự đặc biệt.",
+                descEN: "Stylish text & special character generator.",
+                url: "https://taochudep.vercel.app/",
+                category: "tools",
+                icon: "fa-solid fa-font",
+                color: "from-pink-500 to-rose-500"
+            },
+            {
+                title: "What Is My IP",
+                descVN: "Kiểm tra địa chỉ IP và thông tin mạng của bạn.",
+                descEN: "Check your IP address and network info.",
+                url: "https://whatismyip-two.vercel.app/",
+                category: "tools",
+                icon: "fa-solid fa-globe",
+                color: "from-cyan-500 to-blue-500"
+            },
+            {
+                title: "Speed Test",
+                descVN: "Công cụ kiểm tra tốc độ mạng internet.",
+                descEN: "Internet connection speed test tool.",
+                url: "https://testspeed-eight.vercel.app/",
+                category: "tools",
+                icon: "fa-solid fa-gauge-high",
+                color: "from-red-500 to-orange-500"
+            },
+
+            // Game / Entertainment
+            {
+                title: "Game Caro",
+                descVN: "Trò chơi Caro tuổi thơ cổ điển (X/O).",
+                descEN: "Classic childhood Caro game (Tic-tac-toe style).",
+                url: "https://caro-fawn.vercel.app/",
+                category: "game",
+                icon: "fa-solid fa-chess-board",
+                color: "from-yellow-400 to-orange-400"
+            },
+            {
+                title: "Cầu Tình Yêu",
+                descVN: "Treo móc khóa online, cảm hứng cầu tình yêu Đà Nẵng.",
+                descEN: "Online Love Bridge lock, inspired by Da Nang.",
+                url: "https://cautinhyeuonline.vercel.app/",
+                category: "game",
+                icon: "fa-solid fa-heart",
+                color: "from-red-500 to-pink-600"
+            },
+            {
+                title: "Lucky Wheel",
+                descVN: "Vòng quay may mắn cho sự kiện.",
+                descEN: "Lucky Wheel game for events.",
+                url: "https://vongquaymayman-azure.vercel.app/",
+                category: "game",
+                icon: "fa-solid fa-dharmachakra",
+                color: "from-green-400 to-emerald-600"
+            },
+            {
+                title: "Ngoại Hạng Anh",
+                descVN: "Xem bảng xếp hạng bóng đá Ngoại Hạng Anh.",
+                descEN: "Premier League football standings.",
+                url: "https://ngoaihanganh.vercel.app/",
+                category: "game",
+                icon: "fa-solid fa-trophy",
+                color: "from-indigo-600 to-purple-600"
+            }
+        ];
+
+        // === TRANSLATIONS ===
+        const translations = {
+            vi: {
+                projects: "Dự án",
+                about: "Giới thiệu",
+                contact: "Liên hệ",
+                hero_title_1: "Sáng tạo không giới hạn cùng",
+                hero_desc: "Nơi tổng hợp các giải pháp công nghệ, website doanh nghiệp và các dự án sáng tạo được thực hiện bởi đội ngũ Loem.",
+                view_projects: "Xem dự án",
+                filter_all: "Tất cả",
+                filter_business: "Doanh nghiệp",
+                filter_tools: "Công cụ",
+                filter_game: "Giải trí",
+                founder_title: "Người sáng lập",
+                founder_desc: "Loem Agency cam kết mang đến những giải pháp số hóa tối ưu nhất cho doanh nghiệp của bạn. Từ thiết kế website, lập trình phần mềm cho đến các công cụ marketing hiệu quả.",
+                footer_desc: "Đối tác tin cậy cho sự phát triển kỹ thuật số của bạn.",
+                contact_info: "Thông tin liên hệ",
+                rights: "Bảo lưu mọi quyền.",
+                btn_visit: "Truy cập"
+            },
+            en: {
+                projects: "Projects",
+                about: "About",
+                contact: "Contact",
+                hero_title_1: "Limitless creativity with",
+                hero_desc: "A hub of technology solutions, business websites, and creative projects crafted by the Loem team.",
+                view_projects: "View Projects",
+                filter_all: "All",
+                filter_business: "Business",
+                filter_tools: "Tools",
+                filter_game: "Fun & Games",
+                founder_title: "Founder",
+                founder_desc: "Loem Agency is committed to delivering the best digital solutions for your business. From website design to software development and effective marketing tools.",
+                footer_desc: "Your trusted partner for digital growth.",
+                contact_info: "Contact Info",
+                rights: "All rights reserved.",
+                btn_visit: "Visit Site"
+            }
+        };
+
+        // === APP LOGIC ===
+        let currentLang = 'vi';
+        let currentFilter = 'all';
+
+        function renderProjects() {
+            const grid = document.getElementById('project-grid');
+            grid.innerHTML = '';
+
+            const filtered = projects.filter(p => currentFilter === 'all' || p.category === currentFilter);
+
+            filtered.forEach((p, index) => {
+                const desc = currentLang === 'vi' ? p.descVN : p.descEN;
+                const btnText = currentLang === 'vi' ? translations.vi.btn_visit : translations.en.btn_visit;
+                
+                const card = document.createElement('div');
+                card.className = 'project-card bg-card/40 rounded-2xl overflow-hidden backdrop-blur-sm group animate-fade-in';
+                card.style.animationDelay = `${index * 0.05}s`; // Staggered animation
+
+                card.innerHTML = `
+                    <div class="h-32 bg-gradient-to-r ${p.color} relative overflow-hidden flex items-center justify-center">
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-all"></div>
+                        <i class="${p.icon} text-6xl text-white opacity-80 group-hover:scale-110 transition-transform duration-500 drop-shadow-md"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-semibold tracking-wider text-indigo-400 uppercase border border-indigo-400/30 px-2 py-0.5 rounded">${p.category}</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-indigo-300 transition-colors">${p.title}</h3>
+                        <p class="text-gray-400 text-sm mb-6 h-10 overflow-hidden text-ellipsis line-clamp-2">${desc}</p>
+                        <a href="${p.url}" target="_blank" class="inline-flex items-center text-white font-medium hover:text-indigo-400 transition-colors group-hover:translate-x-1 duration-300">
+                            ${btnText} <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+                        </a>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function switchLanguage() {
+            currentLang = currentLang === 'vi' ? 'en' : 'vi';
+            
+            // Update Toggle Button
+            document.getElementById('current-lang').textContent = currentLang.toUpperCase();
+            
+            // Update Text Content
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    el.textContent = translations[currentLang][key];
+                }
+            });
+
+            // Re-render grid to update descriptions
+            renderProjects();
+        }
+
+        function filterProjects(category) {
+            currentFilter = category;
+            
+            // Update UI buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-white', 'text-dark');
+                btn.classList.add('text-white'); // reset styling logic
+                if (btn.textContent.trim() === (
+                    category === 'all' ? translations[currentLang].filter_all :
+                    category === 'business' ? translations[currentLang].filter_business :
+                    category === 'tools' ? translations[currentLang].filter_tools :
+                    translations[currentLang].filter_game
+                ) || 
+                   // Fallback for initial click logic if text differs from variable map
+                   (category === 'all' && btn.getAttribute('onclick').includes('all')) ||
+                   (category === 'business' && btn.getAttribute('onclick').includes('business')) ||
+                   (category === 'tools' && btn.getAttribute('onclick').includes('tools')) ||
+                   (category === 'game' && btn.getAttribute('onclick').includes('game'))
+                ) {
+                    btn.classList.add('active');
+                }
+            });
+
+            renderProjects();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProjects();
+            
+            // Bind Event Listeners
+            document.getElementById('lang-toggle').addEventListener('click', switchLanguage);
+            
+            // Simple logic to keep filter buttons highlighted correctly after lang switch
+            // (Re-binding onclick is handled inline in HTML for simplicity in single file)
+        });
+
+    </script>
+</body>
+</html>
